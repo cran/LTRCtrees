@@ -1,0 +1,13 @@
+db62fec0f67359482a3b8013efb0cf85 *DESCRIPTION
+f14849e213684b6b891745a95fe1c63d *NAMESPACE
+bef7b7207719224166c5570417724367 *R/LTRCART.R
+8bcaa52b764bc66525ee4a071c9b590c *R/LTRCIT.R
+26ceea7c840dec5c118e17e2f705e08a *R/pred_rpart.R
+cd1abfc19dd42f966489733a385ccc7e *build/vignette.rds
+a8fafb0cf5629cbfa75e97722c260aa8 *inst/doc/LTRCtrees.R
+fb30370f485d01462ac05ac11bb1d619 *inst/doc/LTRCtrees.Rmd
+3092affe73866959aa463f9a3bddd1eb *inst/doc/LTRCtrees.html
+16bc9b53cdc0b6c33cf8acd9bb22cb75 *man/LTRCART.Rd
+27dac98fb419d7fe02ea6457c274e407 *man/LTRCIT.Rd
+53d02af55c1e991bff08b3602c999d85 *man/Pred.rpart.Rd
+fb30370f485d01462ac05ac11bb1d619 *vignettes/LTRCtrees.Rmd
