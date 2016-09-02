@@ -57,6 +57,15 @@ LTRCART.obj <- LTRCART(Surv(age, End, death) ~ sex + FLC + creatinine, Train)
 library(rpart.plot)
 rpart.plot(LTRCART.obj)
 
+## Plot as partykit::party object
+library(partykit)
+plot(as.party(LTRCART.obj))
+
+## Plot as partykit::party object with survival curves on terminal nodes
+LTRCART.obj.party <- as.party(LTRCART.obj)
+LTRCART.obj.party$fitted[["(response)"]]<- Surv(Train$age, Train$End, Train$death)
+plot(LTRCART.obj.party)
+
 ## Predict relative risk on test set
 LTRCART.pred <- predict(LTRCART.obj, newdata = Test)
 

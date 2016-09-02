@@ -61,7 +61,14 @@ Here we set up a training set and a test set to illustrate predictions using the
  plot(LTRCIT.obj)
 ```
 
-Note that the terminal node of the LTRCART tree (left panel) displays the relative risk on that node (relative to an estimated baseline hazard), while the terminal node of the LTRCIT tree (right panel) displays the fitted Kaplan-Meier curve for the observations in that node. 
+Note that the terminal node of the LTRCART tree (left panel) displays the relative risk on that node (relative to an estimated baseline hazard), while the terminal node of the LTRCIT tree (right panel) displays the fitted Kaplan-Meier curve for the observations in that node. One can also plot Kaplan-Meier curves on terminal nodes of the LTRCART tree by converting it to `party` object.
+```{r,fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE} 
+library(partykit)
+LTRCART.obj.party <- as.party(LTRCART.obj) 
+LTRCART.obj.party$fitted[["(response)"]]<- Surv(Train$age, Train$End, Train$death)
+plot(LTRCART.obj.party)
+```
+
 
 Since the class of an LTRCIT object is `party`, the prediction method on an LTRCIT object is the same as those for any trees of class `party` using the `partykit` package. 
 ```{r} 

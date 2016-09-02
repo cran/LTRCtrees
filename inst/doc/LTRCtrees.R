@@ -31,6 +31,12 @@
  ## Plot the fitted LTRCIT tree
  plot(LTRCIT.obj)
 
+## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE------
+library(partykit)
+LTRCART.obj.party <- as.party(LTRCART.obj) 
+LTRCART.obj.party$fitted[["(response)"]]<- Surv(Train$age, Train$End, Train$death)
+plot(LTRCART.obj.party)
+
 ## ------------------------------------------------------------------------
  ## predict median survival time on test data using fitted LTRCIT tree
  LTRCIT.pred <- predict(LTRCIT.obj, newdata=Test, type = "response")

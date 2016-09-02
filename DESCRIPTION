@@ -2,7 +2,7 @@ Package: LTRCtrees
 Type: Package
 Title: Survival Trees to Fit Left-Truncated and Right-Censored Survival
         Data
-Version: 0.1.0
+Version: 0.1.5
 Description: Recursive partition algorithms designed for fitting survival tree
     with left-truncated and right censored (LTRC) data. Such LTRC trees can also
     be used to fit survival tree with time-varying covariates.
@@ -21,6 +21,6 @@ Maintainer: Wei Fu <weifu.scott@gmail.com>
 VignetteBuilder: knitr, rmarkdown
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-06-12 01:48:02 UTC; wfu
+Packaged: 2016-09-02 18:38:14 UTC; wfu
 Repository: CRAN
-Date/Publication: 2016-06-12 17:23:02
+Date/Publication: 2016-09-02 22:29:40
