@@ -39,19 +39,19 @@
 
 #' Fit a conditional inference survival tree for LTRC data
 #'
-#' \code{LTRCIT} returns an \link[partykit]{party} object. This function extends
+#' \code{LTRCIT} returns a \link[partykit]{party} object. This function extends
 #' the conditional inference survival tree algorithm in \code{\link[partykit]{ctree}}
 #' to fit left-truncated and right censored (LTRC) data.
 #'
 #' @param Formula A formula object, with the response be a \link[survival]{Surv}
 #' object, with form Surv(time1, time2, event)
-#' @param Data A data frame contains the variables named in formula.
+#' @param data A data frame contains the variables named in formula.
 #' @param Control A list of control parameters, see \link[partykit]{ctree_control}
 #'
 #' @return An object of class \link[partykit]{party}.
 #'
-#' @references Fu, W. and Simonoff, J.S.(2016). Survival trees for left-truncated and right-censored data,
-#' with application to time-varying covariate data. arXiv:1606.03033 [stat.ME]
+#' @references Fu, W. and Simonoff, J.S.(2017). Survival trees for left-truncated and right-censored data,
+#' with application to time-varying covariate data. Biostatistics, URL: https://doi.org/10.1093/biostatistics/kxw047
 #'
 #'
 #' @examples
@@ -127,11 +127,11 @@
 #'sdata$year <- as.numeric(sdata$accept.dt - as.Date("1967-10-01"))/365.25
 #'
 #'Cox.fit <- coxph(Surv(tstart, tstop, death) ~ age+ surgery, data= sdata)
-#'LTRCART.fit <- LTRCART(Surv(tstart, tstop, death) ~ age + transplant, data = sdata)
+#'LTRCIT.fit <- LTRCIT(Surv(tstart, tstop, death) ~ age + transplant, data = sdata)
 #'plot(LTRCIT.fit)
 #'
 #' @export
-LTRCIT <- function(Formula, Data, Control = partykit::ctree_control()){
+LTRCIT <- function(Formula, data, Control = partykit::ctree_control()){
   if(length(as.list(Formula[[2]]))!=4){
     stop(" Response must be a 'survival' object with 'Surv(time1, time2, event)' ")
   }
@@ -143,6 +143,6 @@ LTRCIT <- function(Formula, Data, Control = partykit::ctree_control()){
     r[weights > 0] <- s
     matrix(as.double(r), ncol = 1)
   }
-  result <- partykit::ctree(formula = Formula, data=Data, ytrafo=h2, control = Control)
+  result <- partykit::ctree(formula = Formula, data=data, ytrafo=h2, control = Control)
   return(result)
 }

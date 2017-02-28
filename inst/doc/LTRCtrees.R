@@ -24,7 +24,7 @@
  ## Putting Surv(End, death) in formula would result an error message
  ## since both LTRCART and LTRCIT are expecting Surv(time1, time2, event)
  
- ## Plot the fitted LTRCART tree using rpart.plot function in rpart.plot[5] package
+ ## Plot the fitted LTRCART tree using rpart.plot function in rpart.plot[6] package
  library(rpart.plot)
  rpart.plot.version1(LTRCART.obj)
 
@@ -120,10 +120,20 @@ sdata$year <- as.numeric(sdata$accept.dt - as.Date("1967-10-01"))/365.25
 
 Cox.fit <- coxph(Surv(tstart, tstop, death) ~ age+ surgery, data= sdata)
 LTRCART.fit <- LTRCART(Surv(tstart, tstop, death) ~ age + transplant, data = sdata)
-LTRCIT.fit <- LTRCIT(Surv(tstart, tstop, death) ~ age + transplant, Data = sdata)
+LTRCIT.fit <- LTRCIT(Surv(tstart, tstop, death) ~ age + transplant, data = sdata)
 
 ## results
 Cox.fit
 rpart.plot.version1(LTRCART.fit)
 plot(LTRCIT.fit)
+
+## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE------
+library(interval)
+data(bcos)
+
+## Fit ICtree survival tree
+Ctree <- ICtree(Surv(left,right,type="interval2")~treatment, bcos)
+
+## Plot the fitted tree
+plot(Ctree)
 

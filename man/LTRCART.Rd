@@ -117,7 +117,6 @@ rpart.plot(LTRCART.fit)
 
 }
 \references{
-Fu, W. and Simonoff, J.S. (2016). Survival trees for left-truncated and right-censored data,
-with application to time-varying covariate data. arXiv:1606.03033 [stat.ME]
+Fu, W. and Simonoff, J.S. (2017). Survival trees for left-truncated and right-censored data,
+with application to time-varying covariate data. Biostatistics, URL: https://doi.org/10.1093/biostatistics/kxw047
 }
-

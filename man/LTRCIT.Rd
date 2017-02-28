@@ -4,13 +4,13 @@
 \alias{LTRCIT}
 \title{Fit a conditional inference survival tree for LTRC data}
 \usage{
-LTRCIT(Formula, Data, Control = partykit::ctree_control())
+LTRCIT(Formula, data, Control = partykit::ctree_control())
 }
 \arguments{
 \item{Formula}{A formula object, with the response be a \link[survival]{Surv}
 object, with form Surv(time1, time2, event)}
 
-\item{Data}{A data frame contains the variables named in formula.}
+\item{data}{A data frame contains the variables named in formula.}
 
 \item{Control}{A list of control parameters, see \link[partykit]{ctree_control}}
 }
@@ -18,7 +18,7 @@ object, with form Surv(time1, time2, event)}
 An object of class \link[partykit]{party}.
 }
 \description{
-\code{LTRCIT} returns an \link[partykit]{party} object. This function extends
+\code{LTRCIT} returns a \link[partykit]{party} object. This function extends
 the conditional inference survival tree algorithm in \code{\link[partykit]{ctree}}
 to fit left-truncated and right censored (LTRC) data.
 }
@@ -95,12 +95,11 @@ sdata$age <- sdata$age - 48
 sdata$year <- as.numeric(sdata$accept.dt - as.Date("1967-10-01"))/365.25
 
 Cox.fit <- coxph(Surv(tstart, tstop, death) ~ age+ surgery, data= sdata)
-LTRCART.fit <- LTRCART(Surv(tstart, tstop, death) ~ age + transplant, data = sdata)
+LTRCIT.fit <- LTRCIT(Surv(tstart, tstop, death) ~ age + transplant, data = sdata)
 plot(LTRCIT.fit)
 
 }
 \references{
-Fu, W. and Simonoff, J.S.(2016). Survival trees for left-truncated and right-censored data,
-with application to time-varying covariate data. arXiv:1606.03033 [stat.ME]
+Fu, W. and Simonoff, J.S.(2017). Survival trees for left-truncated and right-censored data,
+with application to time-varying covariate data. Biostatistics, URL: https://doi.org/10.1093/biostatistics/kxw047
 }
-

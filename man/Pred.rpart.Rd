@@ -50,4 +50,3 @@ LTRCART.pred$KMcurves  ## list of predicted KM curves
 LTRCART.pred$Medians  ## vector of predicted median survival time
 
 }
-

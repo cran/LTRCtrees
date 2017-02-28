@@ -1,6 +1,6 @@
 ---
 title: "Usage of R package LTRCtrees"
-author: "Wei Fu, Jeffrey Simonoff"
+author: "Wei Fu, Jeffrey S. Simonoff"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -10,16 +10,16 @@ vignette: >
 ---
 
 ## Vignette Info
-The `LTRCtrees` package is designed to fit survival trees for left-truncated and right censored (LTRC) data as described in `Fu and Simonoff (2016)`[1]. For right censored data,
-the tree algorithms in `rpart`[2] and `partykit`[3], respectively, can be used to fit a survival tree. The `LTRCtrees` package extends the survival tree algorithms in these two 
-packages to fit trees for LTRC data. Since the package uses the fitting functions in `rpart` and `partykit`, these packages will be installed if they have not already been installed on the user's machine, but they are not loaded into the session when the `LTRCtrees` package is loaded. In addition to fitting trees to LTRC data, a major benefit of these extensions is that they can be used to fit survival trees for data with time-varying covariates.
+The `LTRCtrees` package is designed to fit survival trees for left-truncated and right censored (LTRC) data as described in `Fu and Simonoff (2017a)`[1], and interval-censored survival data as described in `Fu and Simonoff (2017b)`[2]. For right censored data,
+the tree algorithms in `rpart`[3] and `partykit`[4], respectively, can be used to fit a survival tree. The `LTRCtrees` package extends the survival tree algorithms in these two 
+packages to fit trees for LTRC data, as well as interval-censored survival data. Since the package uses the fitting functions in `rpart` and `partykit`, these packages will be installed if they have not already been installed on the user's machine, but they are not loaded into the session when the `LTRCtrees` package is loaded. In addition to fitting trees to LTRC data, a major benefit of these extensions is that they can be used to fit survival trees for data with time-varying covariates.
 
-This document gives several examples of how to use the LTRC trees implemented in the `LTRCtrees` package.   
+This document gives several examples of how to use the LTRC trees and ICtree (interval-censored tree) implemented in the `LTRCtrees` package.   
 
 ## Example of fitting survival trees for LTRC data
 
 ### The assay of serum free light chain data example
-The assay of serum free light chain data for 7874 subjects in the R package `survival`[4] is used as a data example to show how to fit survival trees for LTRC data. The original data were obtained from the residents of Olmsted County aged 50 or greater, and therefore the data are left-truncated at age 50. 
+The assay of serum free light chain data for 7874 subjects in the R package `survival`[5] is used as a data example to show how to fit survival trees for LTRC data. The original data were obtained from the residents of Olmsted County aged 50 or greater, and therefore the data are left-truncated at age 50. 
 The original analysis of this data set was based on the Cox model with age as a covariate and time after enrollment in the study as response. However, in a mortality study such as this one, since greater age is almost always associated with higher risk of death, it is not that meaningful (or surprising) to have age as a (significant) covariate. Also, it is often the case that the real response of interest should be the subject's life length, not the time from enrollment in the study to death/censoring.   
 
 In this example, we use age as a left-truncation point and death/censored time as the event time.  
@@ -53,7 +53,7 @@ Here we set up a training set and a test set to illustrate predictions using the
  ## Putting Surv(End, death) in formula would result an error message
  ## since both LTRCART and LTRCIT are expecting Surv(time1, time2, event)
  
- ## Plot the fitted LTRCART tree using rpart.plot function in rpart.plot[5] package
+ ## Plot the fitted LTRCART tree using rpart.plot function in rpart.plot[6] package
  library(rpart.plot)
  rpart.plot.version1(LTRCART.obj)
 
@@ -184,7 +184,7 @@ sdata$year <- as.numeric(sdata$accept.dt - as.Date("1967-10-01"))/365.25
 
 Cox.fit <- coxph(Surv(tstart, tstop, death) ~ age+ surgery, data= sdata)
 LTRCART.fit <- LTRCART(Surv(tstart, tstop, death) ~ age + transplant, data = sdata)
-LTRCIT.fit <- LTRCIT(Surv(tstart, tstop, death) ~ age + transplant, Data = sdata)
+LTRCIT.fit <- LTRCIT(Surv(tstart, tstop, death) ~ age + transplant, data = sdata)
 
 ## results
 Cox.fit
@@ -192,13 +192,29 @@ rpart.plot.version1(LTRCART.fit)
 plot(LTRCIT.fit)
 ```
 
+## Example of fitting survival trees for interval-censored data
+
+### The bcos data example
+```{r,fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE}
+library(interval)
+data(bcos)
+
+## Fit ICtree survival tree
+Ctree <- ICtree(Surv(left,right,type="interval2")~treatment, bcos)
+
+## Plot the fitted tree
+plot(Ctree)
+```
+
 ## References
-[1] Fu, W. and Simonoff, J.S. (2016). Survival trees for left-truncated and right-censored data, with application to time-varying covariate data. arXiv:1606.03033 [stat.ME]
+[1] Fu, W. and Simonoff, J.S. (2017a). Survival trees for left-truncated and right-censored data, with application to time-varying covariate data.  Biostatistics, URL: https://doi.org/10.1093/biostatistics/kxw047
 
-[2] Therneau, T., Atkinson, B., Ripley, B. and Ripley, M.B., (2015). rpart: Recursive Partitioning and Regression Trees.
+[2] Fu, W. and Simonoff, J.S. (2017b). Survival trees for Interval Censored Survival data. arXiv, URL: https://arxiv.org/abs/1702.07763
 
-[3] Hothorn, T. and Zeileis, A., (2015). partykit: A Modular Toolkit for Recursive Partytioning in R. 
+[3] Therneau, T., Atkinson, B., Ripley, B. and Ripley, M.B., (2015). rpart: Recursive Partitioning and Regression Trees.
 
-[4] Therneau, T., (2015). survival: A Package for Survival Analysis in S. version 2.38.
+[4] Hothorn, T. and Zeileis, A., (2015). partykit: A Modular Toolkit for Recursive Partytioning in R. 
 
-[5] Milborrow, S., (2011). rpart.plot: Plot 'rpart' models: An Enhanced Version of 'plot.rpart'.
+[5] Therneau, T., (2015). survival: A Package for Survival Analysis in S. version 2.38.
+
+[6] Milborrow, S., (2011). rpart.plot: Plot 'rpart' models: An Enhanced Version of 'plot.rpart'.

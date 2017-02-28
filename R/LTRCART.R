@@ -17,8 +17,8 @@
 #' algorithm, with default cp = 0.001. See \link[rpart]{rpart.control} for details.
 #' @return An object of class rpart. See \link[rpart]{rpart.object}.
 #'
-#' @references Fu, W. and Simonoff, J.S. (2016). Survival trees for left-truncated and right-censored data,
-#' with application to time-varying covariate data. arXiv:1606.03033 [stat.ME]
+#' @references Fu, W. and Simonoff, J.S. (2017). Survival trees for left-truncated and right-censored data,
+#' with application to time-varying covariate data. Biostatistics, URL: https://doi.org/10.1093/biostatistics/kxw047
 #'
 #'
 #' @examples
