@@ -38,6 +38,7 @@ Train = DATA[1:500,]
 Test = DATA[1000:1020,]
 
 ## Fit LTRCIT survival tree
+## make sure to attach survival package (by library(survival) ) before using Surv function
 LTRCIT.obj <-  LTRCIT(Surv(age, End, death) ~ sex + FLC + creatinine, Train)
 plot(LTRCIT.obj)
 

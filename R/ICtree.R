@@ -30,6 +30,7 @@
 #' data(bcos)
 #'
 #' ## Fit ICtree survival tree
+#' ## make sure to attach survival package (by library(survival) ) before using Surv function
 #' Ctree <- ICtree(Surv(left,right,type="interval2")~treatment, data = bcos)
 #'
 #' ## Plot the fitted tree
@@ -37,6 +38,9 @@
 #'
 #'@export
 ICtree <- function(Formula, data, Control = partykit::ctree_control()){
+  #library(partykit) -- in order to get partykit::extree_data function
+  requireNamespace("inum")
+
   DATA = data
   X <- DATA[,as.character(Formula[[2]][[2]])]
   Y <- DATA[,as.character(Formula[[2]][[3]])]
@@ -47,10 +51,21 @@ ICtree <- function(Formula, data, Control = partykit::ctree_control()){
     DATA[ID,as.character(Formula[[2]][[3]])] <- epsilon + DATA[ID,as.character(Formula[[2]][[3]])]
   }
 
-  Response <- as.character(Formula)[[2]]
+  if(sum(X == Inf)){
+    stop("There are Infs in the left end of intervals, make sure the left end is bounded")
+  }
+
+  if(sum(Y == Inf)){
+    if(length(Y[Y!=Inf])==0){
+      stop("All Infs on the right end of censoring interval, unable to compute")
+    }
+    Right_end_impute <- max(Y[Y!=Inf])*100 # impute Inf with 100 times the max observed Y value
+    DATA[which(Y==Inf),as.character(Formula[[2]][[3]])] <- Right_end_impute
+  }
 
   ## x2 is Surv(Left,right,type="interval2") object
   .logrank_trafo <- function(x2){
+    if(!(survival::is.Surv(x2) && isTRUE(attr(x2, "type") == "interval"))){stop("Response must be a 'Survival' object with Surv(time1,time2,event) format")}
 
     # Fit IC survival curve
     Curve <- interval::icfit(x2~1)
@@ -63,15 +78,15 @@ ICtree <- function(Formula, data, Control = partykit::ctree_control()){
     Log_Right<- ifelse(Right<=0,0,Right*log(Right))
     result <- (Log_Left-Log_Right)/(Left-Right)
 
-    return(matrix(as.double(result), ncol = 1))
+    return(as.double(result))
   }
 
-  h2 <- function(data, weights) {
-    s <- data[, Response]
-    s <- .logrank_trafo(s[weights > 0,])
-    r <- rep(0, nrow(data))
+  h2 <- function(y, x, start = NULL, weights, offset, estfun = TRUE, object = FALSE, ...) {
+    if (is.null(weights)) weights <- rep(1, NROW(y))
+    s <- .logrank_trafo(y[weights > 0,,drop = FALSE])
+    r <- rep(0, length(weights))
     r[weights > 0] <- s
-    matrix(as.double(r), ncol = 1)
+    list(estfun = matrix(as.double(r), ncol = 1), converged = TRUE)
   }
 
   partykit::ctree(formula = Formula, data=DATA, ytrafo=h2, control = Control)

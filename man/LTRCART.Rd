@@ -48,6 +48,7 @@ Train = DATA[1:500,]
 Test = DATA[1000:1020,]
 
 ## Fit LTRCART survival tree
+## make sure to attach survival package (by library(survival) ) before using Surv function
 LTRCART.obj <- LTRCART(Surv(age, End, death) ~ sex + FLC + creatinine, Train)
 
 ## Putting Surv(End, death) in formula would result an error message
