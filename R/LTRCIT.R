@@ -317,7 +317,7 @@ extree_data <- function(formula, data, subset, na.action = stats::na.pass, weigh
 #' @return An object of class \link[partykit]{party}.
 #'
 #' @references Fu, W. and Simonoff, J.S.(2017). Survival trees for left-truncated and right-censored data,
-#' with application to time-varying covariate data. Biostatistics, URL: https://doi.org/10.1093/biostatistics/kxw047
+#' with application to time-varying covariate data. Biostatistics 18 (2), 352-369.
 #'
 #'
 #' @examples

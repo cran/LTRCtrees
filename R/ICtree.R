@@ -5,8 +5,8 @@
 #'
 #' \code{ICtree} returns a \link[partykit]{party} object. This function extends
 #' the conditional inference survival tree algorithm  in \code{\link[partykit]{ctree}}
-#' to fit interval-censored survival data. This function requires the interval package,
-#' which in turn requires the Icens package, which is not available on CRAN. To install
+#' to fit interval-censored survival data. This function itself not longer requires the interval package, but running the example below
+#' requires the interval package (for bcos data), which in turn requires the Icens package, which is not available on CRAN. To install
 #' the Icens package, enter the following commands
 #'
 #' source("https://bioconductor.org/biocLite.R")
@@ -21,7 +21,7 @@
 #' @return An object of class \link[partykit]{party}.
 #'
 #' @references Fu, W. and Simonoff, J.S. (2017). Survival trees for Interval Censored Survival data.
-#' arXiv, URL: https://arxiv.org/abs/1702.07763
+#' Statistics in medicine 36 (30), 4831-4842
 #'
 #'
 #' @examples
@@ -68,11 +68,13 @@ ICtree <- function(Formula, data, Control = partykit::ctree_control()){
     if(!(survival::is.Surv(x2) && isTRUE(attr(x2, "type") == "interval"))){stop("Response must be a 'Survival' object with Surv(time1,time2,event) format")}
 
     # Fit IC survival curve
-    Curve <- interval::icfit(x2~1)
-
+    #--Curve <- interval::icfit(x2~1)
+    Curve <- icenReg::ic_np(x2[, 1:2])
     ## get estimated survival
-    Left <- interval::getsurv(x2[,1], Curve)[[1]]$S
-    Right<- interval::getsurv(x2[,2], Curve)[[1]]$S
+    #--Left <- interval::getsurv(x2[,1], Curve)[[1]]$S
+    #--Right<- interval::getsurv(x2[,2], Curve)[[1]]$S
+    Left <- 1 - icenReg::getFitEsts(Curve, q = x2[, 1])
+    Right <- 1 - icenReg::getFitEsts(Curve, q = x2[, 2])
 
     Log_Left <- ifelse(Left<=0,0,Left*log(Left))
     Log_Right<- ifelse(Right<=0,0,Right*log(Right))

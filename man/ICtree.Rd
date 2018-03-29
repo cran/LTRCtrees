@@ -24,8 +24,8 @@ conditional inference framework.
 \details{
 \code{ICtree} returns a \link[partykit]{party} object. This function extends
 the conditional inference survival tree algorithm  in \code{\link[partykit]{ctree}}
-to fit interval-censored survival data. This function requires the interval package,
-which in turn requires the Icens package, which is not available on CRAN. To install
+to fit interval-censored survival data. This function itself not longer requires the interval package, but running the example below
+requires the interval package (for bcos data), which in turn requires the Icens package, which is not available on CRAN. To install
 the Icens package, enter the following commands
 
 source("https://bioconductor.org/biocLite.R")
@@ -47,5 +47,5 @@ plot(Ctree)
 }
 \references{
 Fu, W. and Simonoff, J.S. (2017). Survival trees for Interval Censored Survival data.
-arXiv, URL: https://arxiv.org/abs/1702.07763
+Statistics in medicine 36 (30), 4831-4842
 }
