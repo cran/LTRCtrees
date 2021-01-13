@@ -1,4 +1,4 @@
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
  ## Adjust data & clean data
  library(survival)
  set.seed(0)
@@ -10,12 +10,12 @@
  DATA <- Data[Data$End > Data$age,]
  names(DATA)[6] <- "FLC"
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
  ## Setup training set and test set
  Train = DATA[1:500,]
  Test = DATA[1000:1020,]
 
-## ---- fig.show='hold', fig.width = 3.4, fig.height = 4.5,warning = FALSE----
+## ---- fig.show='hold', fig.width = 3.4, fig.height = 4.5,warning = FALSE------
  ## Fit LTRCART and LTRCIT survival tree
  library(LTRCtrees)
  LTRCART.obj <- LTRCART(Surv(age, End, death) ~ sex + FLC + creatinine, Train)
@@ -26,18 +26,18 @@
  
  ## Plot the fitted LTRCART tree using rpart.plot function in rpart.plot[6] package
  library(rpart.plot)
- rpart.plot.version1(LTRCART.obj)
+ prp(LTRCART.obj, roundint=FALSE)
 
  ## Plot the fitted LTRCIT tree
  plot(LTRCIT.obj)
 
-## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE------
+## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE-----------
 library(partykit)
 LTRCART.obj.party <- as.party(LTRCART.obj) 
 LTRCART.obj.party$fitted[["(response)"]]<- Surv(Train$age, Train$End, Train$death)
 plot(LTRCART.obj.party)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
  ## predict median survival time on test data using fitted LTRCIT tree
  LTRCIT.pred <- predict(LTRCIT.obj, newdata=Test, type = "response")
  head(LTRCIT.pred)
@@ -47,19 +47,19 @@ plot(LTRCART.obj.party)
  LTRCIT.pred <- predict(LTRCIT.obj, newdata=Test, type = "prob")
  head(LTRCIT.pred,2)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ## Predict relative risk on test set
 LTRCART.pred <- predict(LTRCART.obj, newdata=Test)
 head(LTRCART.pred)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ## Predict median survival time and Kaplan Meier survival curve
 ## on test data using Pred.rpart
 LTRCART.pred <- Pred.rpart(Surv(age, End, death) ~ sex + FLC + creatinine, Train, Test)
 head(LTRCART.pred$KMcurves, 2)  ## list of predicted KM curves
 head(LTRCART.pred$Medians)  ## vector of predicted median survival time
 
-## ---- echo=FALSE,results='hide'------------------------------------------
+## ---- echo=FALSE,results='hide'-----------------------------------------------
 Patient.ID <- c(1,1,1,2,2)
 Sex <- c('F', 'F', 'F', 'M', 'M')
 Blood.pressure <- c(100,89, 120, 110, 105)
@@ -69,10 +69,10 @@ Death <- c(0,0,1,0,0)
 table1 <- cbind(Patient.ID , Sex, Blood.pressure,Start, End, Death)
 Table <- as.data.frame(table1)
 
-## ---- echo=FALSE, results='asis'-----------------------------------------
+## ---- echo=FALSE, results='asis'----------------------------------------------
 knitr::kable(Table)
 
-## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE------
+## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE-----------
 set.seed(0)
 library(survival)
 ## Create the start-stop-event triplet needed for coxph and LTRC trees
@@ -96,10 +96,10 @@ LTRCART.fit <- LTRCART(Surv(time1, time2, event) ~ age + sex + log(bili), pbcseq
 fit.cox 
 
 ## plots of fitted survival trees with time-varying covariates
-rpart.plot.version1(LTRCART.fit,type=0)
+prp(LTRCART.fit,type=0, roundint=FALSE)
 plot(LTRCIT.fit)
 
-## ----fig.show='hold', fig.width = 3.4, fig.height = 4,warning = FALSE----
+## ----fig.show='hold', fig.width = 3.4, fig.height = 4,warning = FALSE---------
 library(survival)
 ### transform the wide format data into the long format data using tmerge function
 ### from survival package on Stanford Heart Transplant data
@@ -124,10 +124,10 @@ LTRCIT.fit <- LTRCIT(Surv(tstart, tstop, death) ~ age + transplant, data = sdata
 
 ## results
 Cox.fit
-rpart.plot.version1(LTRCART.fit)
+prp(LTRCART.fit, roundint=FALSE)
 plot(LTRCIT.fit)
 
-## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE------
+## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE-----------
 library(interval)
 data(bcos)
 

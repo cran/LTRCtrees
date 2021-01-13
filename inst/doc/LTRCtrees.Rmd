@@ -4,7 +4,7 @@ author: "Wei Fu, Jeffrey S. Simonoff"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{LTRCtrees}
+  %\VignetteIndexEntry{Usage of R package LTRCtrees}
   %\VignetteEngine{knitr::rmarkdown}
   VignetteEncoding{UTF-8}
 ---
@@ -55,7 +55,7 @@ Here we set up a training set and a test set to illustrate predictions using the
  
  ## Plot the fitted LTRCART tree using rpart.plot function in rpart.plot[6] package
  library(rpart.plot)
- rpart.plot.version1(LTRCART.obj)
+ prp(LTRCART.obj, roundint=FALSE)
 
  ## Plot the fitted LTRCIT tree
  plot(LTRCIT.obj)
@@ -151,7 +151,7 @@ LTRCART.fit <- LTRCART(Surv(time1, time2, event) ~ age + sex + log(bili), pbcseq
 fit.cox 
 
 ## plots of fitted survival trees with time-varying covariates
-rpart.plot.version1(LTRCART.fit,type=0)
+prp(LTRCART.fit,type=0, roundint=FALSE)
 plot(LTRCIT.fit)
 ```
 
@@ -188,7 +188,7 @@ LTRCIT.fit <- LTRCIT(Surv(tstart, tstop, death) ~ age + transplant, data = sdata
 
 ## results
 Cox.fit
-rpart.plot.version1(LTRCART.fit)
+prp(LTRCART.fit, roundint=FALSE)
 plot(LTRCIT.fit)
 ```
 

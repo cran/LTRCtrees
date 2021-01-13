@@ -4,10 +4,21 @@
 \alias{extree_data}
 \title{Copy the partykit::extree_data function from partykit to avoid dependency issue}
 \usage{
-extree_data(formula, data, subset, na.action = stats::na.pass, weights,
-  offset, cluster, strata, scores = NULL, yx = c("none", "matrix"),
-  ytype = c("vector", "data.frame", "matrix"), nmax = c(yx = Inf, z = Inf),
-  ...)
+extree_data(
+  formula,
+  data,
+  subset,
+  na.action = stats::na.pass,
+  weights,
+  offset,
+  cluster,
+  strata,
+  scores = NULL,
+  yx = c("none", "matrix"),
+  ytype = c("vector", "data.frame", "matrix"),
+  nmax = c(yx = Inf, z = Inf),
+  ...
+)
 }
 \arguments{
 \item{formula}{Same as the one in \link[partykit]{extree_data}, check \link[partykit]{extree_data} for usage}

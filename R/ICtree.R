@@ -25,6 +25,7 @@
 #'
 #'
 #' @examples
+#' library(Icens)
 #' library(interval)
 #' library(LTRCtrees)
 #' data(bcos)
@@ -37,6 +38,16 @@
 #' plot(Ctree)
 #'
 #'@export
+#'
+
+# library(survival)
+# library(icenReg)
+# data(miceData)
+# idx_inf <- (miceData$u == Inf)
+# miceData$u[idx_inf] <- 9999999.
+# Ctree <- ICtree(Surv(l, u, type="interval2")~grp, data = miceData)
+# plot(Ctree)
+
 ICtree <- function(Formula, data, Control = partykit::ctree_control()){
   #library(partykit) -- in order to get partykit::extree_data function
   requireNamespace("inum")

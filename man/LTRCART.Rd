@@ -4,8 +4,14 @@
 \alias{LTRCART}
 \title{Fit a relative risk survival tree for LTRC data}
 \usage{
-LTRCART(formula, data, weights = NULL, subset = NULL, no.SE = 0,
-  control = rpart::rpart.control(cp = 0.001))
+LTRCART(
+  formula,
+  data,
+  weights = NULL,
+  subset = NULL,
+  no.SE = 0,
+  control = rpart::rpart.control(cp = 0.001)
+)
 }
 \arguments{
 \item{formula}{A formula object specifies the regression function, with the

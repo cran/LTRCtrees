@@ -33,6 +33,7 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("Icens")
 }
 \examples{
+library(Icens)
 library(interval)
 library(LTRCtrees)
 data(bcos)
