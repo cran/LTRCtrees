@@ -20,14 +20,14 @@ response be a \link[survival]{Surv} object, with form Surv(time1, time2, event)}
 \item{data}{An optional data frame which contains the variables
 named in the formula.}
 
-\item{weights}{Optional case weights, same as in \code{\link{rpart}}}
+\item{weights}{Optional case weights, same as in \code{\link[rpart]{rpart}}}
 
 \item{subset}{Optional expression saying that only a subset of the rows of the data should be
-used in the fit, same as in \code{\link{rpart}}}
+used in the fit, same as in \code{\link[rpart]{rpart}}}
 
 \item{no.SE}{Number of standard errors used in pruning, with default value 0.}
 
-\item{control}{A list of control values used to control the \code{\link{rpart}}
+\item{control}{A list of control values used to control the \code{\link[rpart]{rpart}}
 algorithm, with default cp = 0.001. See \link[rpart]{rpart.control} for details.}
 }
 \value{
@@ -35,7 +35,7 @@ An object of class rpart. See \link[rpart]{rpart.object}.
 }
 \description{
 \code{LTRCART} returns an \link[rpart]{rpart} object. This function extends
-the survival tree algorithm in \code{\link{rpart}} to fit left-truncated and
+the survival tree algorithm in \code{\link[rpart]{rpart}} to fit left-truncated and
 right censored (LTRC) data.
 }
 \examples{

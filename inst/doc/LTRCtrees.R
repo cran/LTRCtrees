@@ -15,7 +15,7 @@
  Train = DATA[1:500,]
  Test = DATA[1000:1020,]
 
-## ---- fig.show='hold', fig.width = 3.4, fig.height = 4.5,warning = FALSE------
+## ----fig.show='hold', fig.width = 3.4, fig.height = 4.5,warning = FALSE-------
  ## Fit LTRCART and LTRCIT survival tree
  library(LTRCtrees)
  LTRCART.obj <- LTRCART(Surv(age, End, death) ~ sex + FLC + creatinine, Train)
@@ -59,7 +59,7 @@ LTRCART.pred <- Pred.rpart(Surv(age, End, death) ~ sex + FLC + creatinine, Train
 head(LTRCART.pred$KMcurves, 2)  ## list of predicted KM curves
 head(LTRCART.pred$Medians)  ## vector of predicted median survival time
 
-## ---- echo=FALSE,results='hide'-----------------------------------------------
+## ----echo=FALSE,results='hide'------------------------------------------------
 Patient.ID <- c(1,1,1,2,2)
 Sex <- c('F', 'F', 'F', 'M', 'M')
 Blood.pressure <- c(100,89, 120, 110, 105)
@@ -69,7 +69,7 @@ Death <- c(0,0,1,0,0)
 table1 <- cbind(Patient.ID , Sex, Blood.pressure,Start, End, Death)
 Table <- as.data.frame(table1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(Table)
 
 ## ----fig.show='hold', fig.width = 7, fig.height = 5,warning = FALSE-----------
